@@ -1,48 +1,83 @@
-# LockUp
-## _An Android-based Cellebrite UFED self-defense application_
+# wipeit
 
-LockUp is an Android application that will monitor the device for signs for attempts to image it using known forensic tools like the Cellebrite UFED. Here is a [blog](https://blog.korelogic.com/blog/2020/06/29/cellebrite_good_times_come_on) I wrote.
+_An Android-based self-defense and anti-forensics application._
 
-- Proof-of-Concept. Not meant as an in-depth defense
-- Android API 28, Does not require root
-- Relies on RECEIVE_BOOT_COMPLETED to start a Service and AccessibilityService
-- Monitors USB events through ACTION_USB_DEVICE, package installations, and known exploit staging locations on the filesystem
-- Detects Logical Extractions, File System Extractions, and Physical Extractions leveraging ADB
-- Will automatically respond with a factory reset with DeviceAdminReceiver
-- Beginning steps to researching more robust anti-forensic techniques
+**wipeit** is an Android application designed to monitor the device for unauthorized extraction attempts and signs of forensic imaging tools (such as Cellebrite UFED). Upon detecting physical, logical, or file-system extraction attempts or exploit staging, **wipeit** automatically initiates defensive measures, such as locking or factory resetting the device.
 
-## Signature Detection
+---
 
-- Exploit staging directories and known filenames
-- Known file hashes
-- Application names and certificate metadata
+## Features
 
-## TODO Signatures
+- **Forensic Extraction Detection:** Detects ADB-based Logical Extractions, File System Extractions, and Physical Extractions.
+- **Real-Time Event Monitoring:** Monitors USB events (`ACTION_USB_DEVICE`), package installations, and known exploit staging directories or file hashes on the filesystem.
+- **Plausible Deniability:** Supports triggering defensive responses via entry of a configurable plausible deniability password monitored through an AccessibilityService.
+- **Automated Response:** Leverages Android's `DeviceAdminReceiver` policy to lock and wipe/factory-reset the device when unauthorized activity or threats are detected.
+- **Boot Persistence:** Configured to launch on boot (`RECEIVE_BOOT_COMPLETED`) to ensure continuous background defense.
 
-- Binary-level identifiers
-- Hardcoded RSA keys used for ADB authentication (requires root)
+---
 
-## Installation
+## Prerequisites
 
-I avoided including everything needed to build LockUp, making this application so accessible that it may be easily used to avoid criminal prosecution was not my goal. Instead, my goal was to help support my research into forensic tools in showing how they aren't immune to software issues. 
+- **Java Development Kit (JDK):** JDK 17 or higher
+- **Android SDK:**
+  - `compileSdk`: 34
+  - `minSdk`: 26 (Android 8.0+)
+  - `targetSdk`: 34
+- **Gradle:** Gradle 8.x
 
-## Author
+---
 
-Matt Bergin, [KoreLogic](https://www.korelogic.com/)
+## Building & Compilation
 
-## History
+You can compile, test, and build the project using Gradle commands from the project root directory.
 
-Most recently I [presented](https://www.blackhat.com/asia-21/briefings/schedule/index.html#anti-forensics-reverse-engineering-a-leading-phone-forensic-tool-21789) my research at Blackhat Asia 2021.
+### Build Commands
 
-I've released security advisories for the Cellebrite UFED which you may also be interested in:
+- **Build the entire project:**
+  ```bash
+  gradle build
+  ```
 
-- [KL-001-2020-003: Cellebrite EPR Decryption Relies on Hardcoded AES Key Material](https://korelogic.com/Resources/Advisories/KL-001-2020-003.txt)
-- [KL-001-2020-002: Cellebrite Restricted Desktop Escape and Escalation of User Privilege](https://korelogic.com/Resources/Advisories/KL-001-2020-002.txt)
-- [KL-001-2020-001: Cellebrite Hardcoded ADB Authentication Keys](https://korelogic.com/Resources/Advisories/KL-001-2020-001.txt)
+- **Compile Debug APK:**
+  ```bash
+  gradle assembleDebug
+  ```
+  The generated APK will be located at:
+  `app/build/outputs/apk/debug/app-debug.apk`
+
+- **Compile Release APK:**
+  ```bash
+  gradle assembleRelease
+  ```
+  The generated APK will be located at:
+  `app/build/outputs/apk/release/app-release.apk`
+
+- **Run Unit Tests:**
+  ```bash
+  gradle test
+  ```
+
+- **Clean Build Artifacts:**
+  ```bash
+  gradle clean
+  ```
+
+---
+
+## Installation & Configuration
+
+1. **Build the APK:** Compile the debug or release APK using `gradle assembleDebug`.
+2. **Install on Device:**
+   ```bash
+   adb install app/build/outputs/apk/debug/app-debug.apk
+   ```
+3. **Grant Device Administrator Privileges:**
+   Open the application settings and grant Device Administrator rights to enable automated device lock/wipe functionality upon trigger detection.
+4. **Enable Accessibility Service (Optional):**
+   Enable the accessibility service in Android Settings if you wish to utilize plausible deniability trigger features.
+
+---
 
 ## License
 
-[Creative Commons Zero 1.0](https://github.com/mbkore/lockup/blob/main/LICENSE)
-
-
-# Wipeit
+This project is licensed under the [Creative Commons Zero v1.0 Universal](LICENSE) license.
