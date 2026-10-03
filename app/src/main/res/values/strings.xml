@@ -1,6 +1,6 @@
 <!-- es fr ru zh fa tr pl ar uk vi ug sv sl ro ms lt ln ko ja it da cs km hy be -->
 <resources>
-    <string name="app_name">LockUp</string>
+    <string name="app_name">wipeit</string>
     <string name="version">Version</string>
     <string name="setup_button">Setup</string>
     <string name="footer">Defending your privacy</string>
