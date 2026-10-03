@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="100pt"
+    android:layout_width="100pt">
+
+    <PreferenceCategory android:title="@string/pref_triggerMech">
+
+        <EditTextPreference
+            android:defaultValue=""
+            android:enabled="false"
+            android:id="@+id/deniabilityPw"
+            android:dialogTitle="@string/deniabilityPw_dialogTitle"
+            android:key="deniabilityPw"
+            android:summary="@string/deniabilityPw_summary"
+            android:title="@string/deniabilityPw_title" />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:id="@+id/plausible"
+            android:key="plausible"
+            android:enabled="true"
+            android:summary="@string/plausible_summary"
+            android:title="@string/plausible_title"
+            android:clickable="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_defenseMech">
+
+        <ListPreference
+            android:defaultValue="Factory Reset"
+            android:id="@+id/desiredResponse"
+            android:key="desiredResponse"
+            android:title="@string/desiredResponse_title"
+            android:summary="@string/desiredResponse_default"
+            android:entries="@array/response_options"
+            android:entryValues="@array/response_options" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_appConfig">
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:id="@+id/notifyUser"
+            android:key="notifyUser"
+            android:title="@string/notifyUser_title"
+            android:summary="@string/notifyUser_summary" />
+
+        <Preference
+            android:key="version"
+            android:title="@string/version"
+            android:summary="1.0.0" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
